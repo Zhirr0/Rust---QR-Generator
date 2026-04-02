@@ -1,26 +1,173 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-bg: oklch(7% 0.018 255);
+  --color-surface: oklch(11% 0.022 255);
+  --color-surface-hi: oklch(15% 0.025 255);
+  --color-border: oklch(21% 0.028 255);
+  --color-border-hi: oklch(40% 0.04 255);
+  --color-text: oklch(93% 0.008 85);
+  --color-muted: oklch(46% 0.016 255);
+  --color-accent: oklch(79% 0.21 148);
+  --color-accent-faint: oklch(79% 0.21 148 / 0.1);
+  --color-accent-hi: oklch(84% 0.21 148);
+  --color-err: oklch(65% 0.21 24);
+  --color-btn-text: oklch(8% 0.04 148);
+  --color-selection-text: oklch(7% 0.03 148);
+  --color-placeholder: oklch(32% 0.018 255);
+  --color-footer: oklch(30% 0.02 255);
+
+  --font-bebas: var(--font-bebas);
+  --font-dm-mono: var(--font-dm-mono);
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 14px;
+
+  --: 110ms;
+  --: 200ms;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@layer base {
+  *,
+  *::before,
+  *::after {
+    @apply box-border m-0 p-0;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  html {
+    @apply bg-bg text-text font-dm-mono antialiased;
+  }
+
+  ::selection {
+    @apply bg-accent text-selection-text;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .page-main {
+    @apply min-h-screen flex flex-col items-center px-6 py-16 max-w-[540px] mx-auto;
+  }
+
+  .page-header {
+    @apply w-full mb-12;
+  }
+
+  .page-tag {
+    @apply block text-[10px] tracking-[0.3em] mb-3 text-muted;
+  }
+
+  .page-title {
+    @apply text-[80px] leading-[0.92] mb-3 font-bebas text-text tracking-[0.015em];
+  }
+
+  .page-sub {
+    @apply text-[12px] tracking-[0.06em] text-muted;
+  }
+
+  .page-loading {
+    @apply text-[11px] tracking-[0.25em] py-24 text-center text-muted;
+  }
+
+  .page-footer {
+    @apply mt-20 text-[10px] tracking-[0.3em] text-footer;
+  }
+
+  .gen-wrapper {
+    @apply w-full flex flex-col gap-5;
+  }
+
+  .gen-label {
+    @apply block text-[10px] tracking-[0.28em] mb-[10px] text-muted;
+  }
+
+  .gen-field {
+    @apply w-full;
+  }
+
+  .gen-input {
+    @apply w-full px-4 py-[14px] text-[13px] tracking-[0.03em] outline-none
+           transition-colors  bg-surface border border-border
+           rounded-md text-text font-dm-mono
+           placeholder:text-placeholder
+           focus:border-accent focus:bg-surface-hi;
+  }
+
+  .gen-options {
+    @apply flex gap-5;
+
+    .gen-field {
+      @apply flex-1;
+    }
+  }
+
+  .gen-ec-row {
+    @apply flex gap-[6px];
+  }
+
+  .gen-ec-btn {
+    @apply flex-1 py-[10px] text-[12px] tracking-[0.12em] cursor-pointer
+           transition-all  bg-transparent border border-border
+           rounded-sm text-muted font-dm-mono
+           hover:border-border-hi hover:text-text;
+  }
+
+  .gen-ec-active {
+    @apply !border-accent !text-accent !bg-accent-faint;
+  }
+
+  .gen-slider {
+    @apply w-full mt-[6px] cursor-pointer appearance-none h-[2px] bg-border rounded-[1px] outline-none;
+
+    &::-webkit-slider-thumb {
+      @apply appearance-none w-[13px] h-[13px] rounded-full bg-accent cursor-pointer
+             transition-transform  hover:scale-[1.2];
+    }
+
+    &::-moz-range-thumb {
+      @apply w-[13px] h-[13px] rounded-full bg-accent border-none cursor-pointer;
+    }
+  }
+
+  .gen-btn {
+    @apply w-full py-4 text-[12px] tracking-[0.28em] cursor-pointer
+           transition-all  bg-accent text-btn-text border-none
+           rounded-md font-dm-mono font-medium
+           disabled:opacity-30 disabled:cursor-not-allowed;
+
+    &:hover:not(:disabled) {
+      @apply bg-accent-hi;
+    }
+
+    &:active:not(:disabled) {
+      @apply scale-[0.99];
+    }
+  }
+
+  .gen-error {
+    @apply text-[11px] tracking-[0.05em] text-err;
+  }
+
+  .gen-output {
+    @apply flex flex-col items-center gap-5 mt-3 pt-5 border-t border-border;
+
+    .gen-qr-frame {
+      @apply p-5 bg-surface border border-border rounded-lg;
+
+      svg {
+        @apply block rounded-sm;
+      }
+    }
+  }
+
+  .gen-actions {
+    @apply flex gap-3;
+  }
+
+  .gen-dl-btn {
+    @apply px-8 py-3 text-[11px] tracking-[0.28em] cursor-pointer
+           transition-all  bg-transparent border border-border
+           rounded-md text-muted font-dm-mono
+           hover:border-accent hover:text-accent;
+  }
 }
