@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "wasm-pack build --target web ./rust && next build --turbopack",
+    "build": "wasm-pack build --target web ./rust && cp -r ./rust/pkg ./wasm-pkg && next build --no-turbopack",
     "start": "next start",
     "lint": "eslint"
   },
