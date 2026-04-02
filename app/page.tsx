@@ -1,7 +1,8 @@
+'use client'
 import dynamic from "next/dynamic";
 
 const QRGenerator = dynamic(() => import("@/components/QrGenerator"), {
-  ssr: true,
+  ssr: false,
   loading: () => <p className="page-loading">INITIALIZING WASM...</p>,
 });
 
