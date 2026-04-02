@@ -13,8 +13,8 @@ let wasmCache: WasmModule | null = null
 async function loadWasm(): Promise<WasmModule | null> {
   if (wasmCache) return wasmCache
   try {
-    const mod = await import('@/wasm-pkg/qr_wasm')
-    wasmCache = mod as unknown as WasmModule
+    const { generate_qr } = await import('@/wasm-pkg/qr_wasm')
+    wasmCache = { generate_qr }
     return wasmCache
   } catch (err) {
     console.error('[WASM] Failed to initialize:', err)
